@@ -1,0 +1,88 @@
+body {
+  /*test*/
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  background-image: url("../assets/content/background/images/start.png");
+  width: 100%;
+  /*height: 1080px;*/
+  height: 100%;
+  /*background-color: #b3b3b3;*/
+  background-color: lightblue;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+#startScreen {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 9999999999;
+  background-color: green;
+}
+
+.main-content,
+header,
+footer {
+  text-align: center;
+}
+
+.email {
+  width: 750px;
+  height: 640px;
+  position: absolute;
+  background-size: 100%;
+}
+
+.skype {
+  width: 529px;
+  height: 201px;
+  position: absolute;
+  background-size: 100%;
+}
+
+.notification {
+  width: 359px;
+  height: 115px;
+  background-size: 100%;
+  float: right;
+}
+
+.textbox {
+  height: 40px;
+  width: 691.4px;
+  margin-left: 39px;
+  margin-right: 21px;
+  display: inline-block;
+  margin-top: 560px;
+}
+
+.notificationContainer {
+  width: 359px;
+  height: 90%;
+  /*background-color:green;*/
+  /*float:right;*/
+  right: 0;
+  position: absolute;
+}
+
+#notificationContainer1 {
+  z-index: 1000;
+}
+
+#notificationContainer2 {
+  z-index: 2000;
+}
+
+input {
+  width: 100%;
+  height: 100%;
+}
+
+.hide {
+  display: none;
+}
