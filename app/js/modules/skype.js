@@ -1,3 +1,7 @@
+/*
+	Class that creates Skype messages
+*/
+
 export class Skype {
 	/*
 		Set up of data that controls the message

@@ -1,3 +1,9 @@
+
+
+/*
+	Class that creates Email messages
+*/
+
 export class Email {
 	/*
 		Set up of data that controls the message

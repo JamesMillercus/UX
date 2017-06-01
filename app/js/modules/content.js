@@ -1,3 +1,6 @@
+import { Email } from './email';
+import { Skype } from './skype';
+import { Notification } from './notification';
 
 let options = {
 	email: {
@@ -39,16 +42,35 @@ let options = {
 };
 
 let content = {
+	// content that is displayed is stored & declared here
 	create: {
 			message:[]
 	},
+	// variables to keep track of where the user journey is
 	trackingVars: {
+		// track which content is currently active
 		active: -1,
-		begin: false,
-		currentNotification: 0
+		// boolean to start & finish experience
+		begin: false
 	},
+	// definining & declaring the content
+	definition: {
+		// content type
+		type: [
+			"email",
+			"skype",
+			"notification"
+		],
+		// declare each content type with their associated class
+		class: [
+			Email,
+			Skype,
+			Notification
+		]
+	},
+	// User Journey
 	UX: [
-
+	
 	// BEGINNING
 		// email content
 		{ "type": "email", "url" : "./assets/content/email/images/ComputerScreen-v2-44.png", "posX" : 2, "posY" : 2, "width": 750, "height": 640, "delay": options.email.beginning.delay, "messageLength": options.email.beginning.messageLength },
@@ -93,10 +115,7 @@ let content = {
 		{ "type": "skype", "url" : "./assets/content/skype/images/ComputerScreen-v2-03.png", "width": 529, "height": 201, "delay": options.skype.finish.delay },
 		// notification content
 		{ "type": "notification", "url" : "./assets/content/notification/images/ComputerScreen-v2-17.png", "width": 359, "height": 115, "delay": options.notification.finish.delay },
-
 	]
 }
-
-
 
 export { content }

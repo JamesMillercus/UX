@@ -1,3 +1,10 @@
+
+
+/*
+	Class that creates Notification messages
+*/
+
+
 export class Notification {
 	/*
 		Set up of data that controls the message
