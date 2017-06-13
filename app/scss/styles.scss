@@ -59,8 +59,6 @@ body {
 .notificationContainer {
 	width:359px;
 	height:90%;
-	/*background-color:green;*/
-	/*float:right;*/
 	right:0;
 	position:absolute;
 }
@@ -68,9 +66,7 @@ body {
 #notificationContainer1{
 	z-index:1000;
 }
-#notificationContainer2{
-	z-index:2000;
-}
+
 
 input {
 	width:100%;

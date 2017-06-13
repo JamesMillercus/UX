@@ -4,12 +4,13 @@
 	Class that creates Notification messages
 */
 
+import { slide, fade } from './animation.js';
 
 export class Notification {
 	/*
 		Set up of data that controls the message
 	*/
-	constructor(data, number, nContainer, next) {
+	constructor(data, number, next) {
 	// constructor(data, number, next) {
 		let url = data.url,
 			posX = data.posX,
@@ -20,7 +21,7 @@ export class Notification {
 			notification = this,
 			self = this;
 		// this.createNotification(url, number, data.delay, data.messageLength, posX, posY, pageW, pageH, data.width, data.height, notification, audio, next);
-		this.createNotification(url, number, data.delay, data.messageLength, posX, posY, pageW, pageH, data.width, data.height, notification, audio, nContainer, next);
+		this.createNotification(url, number, data.delay, data.messageLength, posX, posY, pageW, pageH, data.width, data.height, notification, audio, next);
 		
 		$( window ).resize(function() {
 			notification.resizer(number, pageW, pageH, data.width, data.height, posX, posY);
@@ -30,24 +31,35 @@ export class Notification {
 	/*
 		Create message
 	*/
-	createNotification(url, number, delay, typelength, posX, posY, pageW, pageH, notificationW, notificationH, notification, audio, nContainer, next) {
+	createNotification(url, number, delay, typelength, posX, posY, pageW, pageH, notificationW, notificationH, notification, audio, next) {
 		// creation
-		if(nContainer== 1) $( "#notificationContainer1" ).append("<div class = 'notification' id = 'notification"+ number +"'></div>");
-		if(nContainer== 2) $( "#notificationContainer2" ).append("<div class = 'notification' id = 'notification"+ number +"'></div>");
-		// check number of notifications
-		if($('.notification').length > 1) $( "#notification"+number ).css({"margin-top": "10"});
+		$( "#notificationContainer1" ).append("<div class = 'notification' id = 'notification"+ number +"'></div>");
 		// positioning
-		$( "#notification"+number ).css({"background-image": "url("+url+")", "z-index":10 + number});
+		$( "#notification"+number ).css({"background-image": "url("+url+")", "z-index":10 + number, "margin-top": 10, "margin-right": -$("#notification"+number).width()});
+		slide($("#notification"+number));
 		//play mp3
 		audio.play();
+		let duration = 5000;
 		// destroy message after x seconds
+		// console.log("start destroy timer");
 		let destroy = setTimeout(function(){ 
-	    	$( "#notification"+number ).remove();
-		}, 1000);
+			fade($( "#notification"+number ));
+	    	// console.log("destroyed not after 3 seconds");
+			// $( "div" ).remove( "#notification"+number );
+		}, duration);
 
+		if(!delay) delay = 200;
+			
 		let timeout = setTimeout(function(){ 
-			next();
+			notification.nextStep(next, destroy, timeout, number);
 		}, delay);
+	}
+
+	nextStep(next, destroy, timeout, number){
+    	// $( "#notification"+number ).remove();
+		clearTimeout(timeout);
+		// clearTimeout(destroy);
+		next();
 	}
 
 	/*
@@ -55,9 +67,13 @@ export class Notification {
 	*/
 	getPos(number, notificationDimension, pageDimension){
 		let notificationYseperator = (pageDimension / notificationDimension)-8.3;
-		if(number == 0) return number * notificationDimension;
-		else if(number >= 1 && number < 8 ) return (number*notificationDimension)*notificationYseperator;
-		else if(number >= 8 && number < 16) return (((number-8) * notificationDimension) * notificationYseperator)+10;
+		return (number*notificationDimension)*notificationYseperator;
+		// if(number == 0) return number * notificationDimension;
+		// else if(number >= 1 && number < 8 ) return (number*notificationDimension)*notificationYseperator;
+		// else if(number >= 8 && number < 16) {
+		// 	console.log("BROKEN!!");
+		// 	return (((number-8) * notificationDimension) * notificationYseperator)+10;
+		// }
 	}
 	/*
 		Browser re-size

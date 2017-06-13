@@ -31,32 +31,44 @@ export class Email {
 		// console.log("EMAIL NUMBER = " + number);
 		// console.log("EMAIL POS = "+ this.getPos(posX,pageW,emailW));
 		// creation
-		$( ".container" ).append( $( "<div class = 'email' id = 'email"+ number +"'> <form class= 'textbox' id = 'textbox" + number + "'> <input id = 'inputbox" + number + "' type='text' value=''></form></div>") );
+		$( ".container" ).append( $( "<div class = 'email' id = 'email"+ number +"'> <form class= 'textbox' id = 'textbox" + number + "'> <input id = 'inputbox" + number + "' autocomplete='off' type='text' value='Type here...'></form></div>") );
 		// positioning
 		$( "#email"+number ).css({ "margin-left": this.getPos(posX,pageW,emailW)+"px", "margin-top": this.getPos(posY,pageH,emailH) + "px", "background-image": "url("+url+")", "z-index": number});
 		// select input to type
-		$( "#inputbox"+number ).focus().select();
+		clearTimeout(textEditor);
+		let textEditor = setTimeout(function(){ 
+			// trigger next pop up
+			$( "#inputbox"+number ).focus();
+		}, 200);
 		//play mp3
 		audio.play();
 		// destroy message after x seconds
+		clearTimeout(timeout);
 		let timeout = setTimeout(function(){ 
 			// trigger next pop up
 			email.nextStep(number, next, timeout);
 		}, delay);
 		// destroy message after x keystrokes
-		$( "#inputbox"+number ).keydown(function() {
+		$( "#inputbox" + number ).keydown(function() {
+			if(this.value == "Type here..."){
+				this.value = this.value.replace('Type here...','');
+			}
 			if(event.keyCode == 13) {
+			  $( "#inputbox"+number ).css({"background-color": "#75CE6B"});
 		      event.preventDefault();
+			  email.nextStep(number, next, timeout);
 		      return false;
 		    }
-
-			if(this.value.length + 2 > typelength) email.nextStep(number, next, timeout);
+			if(this.value.length + 2 > typelength) {
+				$( "#inputbox"+number ).css({"background-color": "#75CE6B"});
+				email.nextStep(number, next, timeout);
+			}
 		});	
 	}
 
 	nextStep(number, next, timeout){
-		clearTimeout(timeout);
 		document.getElementById("inputbox"+number).disabled = true;
+		clearTimeout(timeout);
 		next();
 	}
 

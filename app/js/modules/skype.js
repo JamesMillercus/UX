@@ -2,6 +2,9 @@
 	Class that creates Skype messages
 */
 
+// import the wiggle animation
+import { wiggle } from './animation.js';
+// export the skype class
 export class Skype {
 	/*
 		Set up of data that controls the message
@@ -28,25 +31,31 @@ export class Skype {
 		$( ".container" ).append( $( "<div class = 'skype' id = 'skype"+ number +"'> </div>") );
 		// positioning
 		$( "#skype"+number ).css({ "margin-left": this.getPos(2, pageW,skypeW)+"px", "margin-top": this.getPos(2.2, pageH,skypeH) + "px", "background-image": "url("+url+")", "z-index": "10"+number});		
+		wiggle("#skype"+number);
 		//play mp3
-		skype.playMP3(audio, delay, duration, next);	
+		skype.playMP3(audio);	
 		// when mp3 finishes
 		audio.addEventListener("ended", function() {
 			// remove skype box
-	    	$( "#skype"+number ).remove();
+	    	$( "#skype"+number ).addClass("hide");
+	    	// trigger next thing
 	    });
+    	skype.triggerNext(delay, duration, audio, next);
+	}
+
+	triggerNext(delay, duration, audio, next){
+		duration = audio.duration;
+		if(!delay) delay = duration * 1000;
+		clearTimeout(timeout);
+	    let timeout = setTimeout(function(){ 
+	    	next();
+		}, delay);
 	}
 	/*
 		Play MP3
 	*/
-	playMP3(audio, delay, duration, next){
+	playMP3(audio){
 		audio.play();
-	    duration = audio.duration;
-		if(!delay) delay = duration * 1000;
-	    	// console.log("skype next();");
-	    let timeout = setTimeout(function(){ 
-	    	next();
-		}, delay);
 	}
 	/*
 		Calc message position
